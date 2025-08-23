@@ -1,13 +1,14 @@
 import './App.css'
 
 import { useState, useEffect } from "react";
+import { computeTimerColor } from "./timer";
 
 function BarcodeApp() {
   const [barcode, setBarcode] = useState("");
   const [startTime, setStartTime] = useState(null);
   const [elapsed, setElapsed] = useState(0);
   const [count, setCount] = useState(0);
-  const optimalTime = 135; // saniye
+  const optimalTime = 135; // saniye; bu değer aşıldığında zamanlayıcı kırmızıya döner
 
   // Timer güncellemesi
   useEffect(() => {
@@ -37,11 +38,7 @@ function BarcodeApp() {
   };
 
   // Uyarı rengi (yeşil / sarı / kırmızı)
-  const getTimerColor = () => {
-    if (elapsed < optimalTime * 0.8) return "text-green-600";
-    if (elapsed < optimalTime) return "text-yellow-600";
-    return "text-red-600";
-  };
+  const getTimerColor = () => computeTimerColor(elapsed, optimalTime);
 
   return (
     <div className="p-6">
