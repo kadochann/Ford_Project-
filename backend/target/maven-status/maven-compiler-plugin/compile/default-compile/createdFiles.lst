@@ -1,0 +1,4 @@
+com\example\backend\BackendApplication.class
+com\example\backend\service\TrackingService.class
+com\example\backend\controller\BarcodeController.class
+com\example\backend\model\ProductRecord.class
