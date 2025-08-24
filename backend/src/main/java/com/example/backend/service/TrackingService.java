@@ -26,7 +26,12 @@ public class TrackingService {
     public synchronized void appendRecord(ProductRecord record) throws IOException {
         if (!Files.exists(filePath)) {
             Files.createFile(filePath);
+            //Files.writeString(filePath, "barcode,duration,timestamp\n", StandardOpenOption.APPEND);
+        }
+        // Eğer dosya boşsa başlığı yaz
+        if (Files.size(filePath) == 0) {
             Files.writeString(filePath, "barcode,duration,timestamp\n", StandardOpenOption.APPEND);
+        
         }
         String line = String.format("%s,%d,%s%n", record.barcode(), record.duration(), formatter.format(record.timestamp()));
         Files.writeString(filePath, line, StandardOpenOption.APPEND);
