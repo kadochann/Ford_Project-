@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
+import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -61,6 +62,27 @@ public class TrackingService {
 
     public Path getFilePath() {
         return filePath;
+    }
+
+    public Optional<ProductRecord> getLastRecord() throws IOException {
+        List<String> lines = getAllLines();
+        if (lines.size() <= 1) {
+            return Optional.empty();
+        }
+        String line = lines.get(lines.size() - 1);
+        try {
+            String cleanLine = line.replaceAll("\"", "");
+            String[] parts = cleanLine.split(",");
+            if (parts.length >= 3) {
+                String barcode = parts[0];
+                long duration = Long.parseLong(parts[1]);
+                Instant timestamp = Instant.parse(parts[2]);
+                return Optional.of(new ProductRecord(barcode, duration, timestamp));
+            }
+        } catch (Exception e) {
+            // ignore invalid line
+        }
+        return Optional.empty();
     }
 
     public Map<String, Object> getDailyStats() throws IOException {

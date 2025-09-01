@@ -70,6 +70,7 @@ Frontend `http://localhost:5173` adresinde çalışacak.
 - **GET** `/api/barcodes/list` - Tüm kayıtları listele
 - **GET** `/api/barcodes/count` - Toplam ürün sayısını getir
 - **GET** `/api/barcodes/stats` - Günlük istatistikleri getir
+- **GET** `/api/barcodes/last` - Son kaydedilen ürünü getir
 - **GET** `/api/barcodes` - CSV dosyasını indir
 - **POST** `/api/barcodes/recreate-csv` - CSV dosyasını yeniden oluştur
 
