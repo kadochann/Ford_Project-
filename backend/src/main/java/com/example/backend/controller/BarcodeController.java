@@ -94,6 +94,17 @@ public class BarcodeController {
         }
     }
 
+    @GetMapping("/last")
+    public ResponseEntity<ProductRecord> getLastRecord() {
+        try {
+            return service.getLastRecord()
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.noContent().build());
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @PostMapping("/recreate-csv")
     public ResponseEntity<Map<String, String>> recreateCsvFile() {
         try {

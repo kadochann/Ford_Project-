@@ -10,6 +10,14 @@ This Spring Boot module provides REST endpoints for saving and retrieving scanne
   - Returns the accumulated records as a CSV file download.
 - `GET /api/barcodes/list`
   - Returns the raw CSV lines as JSON for quick inspection.
+- `GET /api/barcodes/count`
+  - Returns the number of stored records.
+- `GET /api/barcodes/stats`
+  - Returns daily statistics like average duration and over/under counts.
+- `GET /api/barcodes/last`
+  - Returns the last recorded product as JSON.
+- `POST /api/barcodes/recreate-csv`
+  - Rewrites the CSV file with consistent formatting.
 
 ## Building
 ```bash
