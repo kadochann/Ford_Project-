@@ -58,6 +58,7 @@ public class BarcodeController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=ford_barcodes.csv")
                 .header(HttpHeaders.CONTENT_TYPE, "text/csv; charset=utf-8")
+                .header("Content-Encoding", "utf-8")
                 .contentLength(resource.contentLength())
                 .body(resource);
     }
