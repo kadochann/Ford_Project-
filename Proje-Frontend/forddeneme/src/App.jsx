@@ -175,7 +175,7 @@ function App() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'ford_barcodes.csv';
+        a.download = 'barcodes.csv';
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -262,7 +262,7 @@ function App() {
       <div className="bg-white shadow-md border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-4 text-center">
           <h1 className="text-2xl font-bold text-gray-800">
-            Ford Ürün Takip Sistemi
+            Ürün Takip Sistemi
           </h1>
         </div>
       </div>
