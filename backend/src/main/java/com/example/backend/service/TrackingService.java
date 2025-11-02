@@ -33,14 +33,14 @@ public class TrackingService {
                 Files.createFile(filePath);
             }
             
-            // Eğer dosya boşsa başlığı yaz
+            // Eğer dosya boşsa başlığı yaz - UTF-8 BOM ile başla, semicolon ayırıcı
             if (Files.size(filePath) == 0) {
-                String header = "Barkod,Süre (sn),Zaman Damgası\n";
+                String header = "\uFEFFBarkod;Süre (sn);Tarih\n";
                 Files.write(filePath, header.getBytes(StandardCharsets.UTF_8), StandardOpenOption.WRITE);
             }
             
-            // CSV satırını oluştur - Türkçe başlıklar ve daha okunabilir format
-            String line = String.format("\"%s\",%d,\"%s\"\n", 
+            // CSV satırını oluştur - Excel uyumlu format (semicolon ayırıcı)
+            String line = String.format("\"%s\";%d;\"%s\"\n", 
                 record.barcode(), 
                 record.duration(), 
                 formatter.format(record.timestamp())
@@ -72,7 +72,7 @@ public class TrackingService {
         String line = lines.get(lines.size() - 1);
         try {
             String cleanLine = line.replaceAll("\"", "");
-            String[] parts = cleanLine.split(",");
+            String[] parts = cleanLine.split(";");
             if (parts.length >= 3) {
                 String barcode = parts[0];
                 long duration = Long.parseLong(parts[1]);
@@ -108,9 +108,9 @@ public class TrackingService {
 
         for (String line : dataLines) {
             try {
-                // CSV parsing - tırnak işaretlerini kaldır ve virgülle böl
+                // CSV parsing - tırnak işaretlerini kaldır ve semicolon ile böl
                 String cleanLine = line.replaceAll("\"", "");
-                String[] parts = cleanLine.split(",");
+                String[] parts = cleanLine.split(";");
                 if (parts.length >= 2) {
                     long duration = Long.parseLong(parts[1]);
                     durations.add(duration);
@@ -147,21 +147,21 @@ public class TrackingService {
         // Mevcut verileri geçici olarak sakla
         List<String> dataLines = lines.subList(1, lines.size());
         
-        // Dosyayı temizle ve yeni başlık yaz
-        String header = "Barkod,Süre (sn),Zaman Damgası\n";
+        // Dosyayı temizle ve yeni başlık yaz - UTF-8 BOM ile başla, semicolon ayırıcı
+        String header = "\uFEFFBarkod;Süre (sn);Tarih\n";
         Files.write(filePath, header.getBytes(StandardCharsets.UTF_8), StandardOpenOption.WRITE);
         
         // Verileri yeni formatta yaz
         for (String line : dataLines) {
             try {
                 String cleanLine = line.replaceAll("\"", "");
-                String[] parts = cleanLine.split(",");
+                String[] parts = cleanLine.split(";");
                 if (parts.length >= 3) {
                     String barcode = parts[0];
                     String duration = parts[1];
                     String timestamp = parts[2];
                     
-                    String newLine = String.format("\"%s\",%s,\"%s\"\n", barcode, duration, timestamp);
+                    String newLine = String.format("\"%s\";%s;\"%s\"\n", barcode, duration, timestamp);
                     Files.write(filePath, newLine.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
                 }
             } catch (Exception e) {

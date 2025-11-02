@@ -5,7 +5,7 @@ const computeTimerColor = (elapsed, optimalTime) => {
   if (elapsed >= optimalTime) {
     return "text-red-600";
   } else if (elapsed > optimalTime * 0.8) {
-    return "text-orange-500";
+    return "text-orange-600";
   } else {
     return "text-green-600";
   }
@@ -175,7 +175,7 @@ function App() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'ford_barcodes.csv';
+        a.download = 'barcodes.csv';
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -253,8 +253,6 @@ function App() {
   };
 
   // SVG icons for buttons
-  const SignalSVG = <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-signal mr-2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 20V4"/></svg>;
-  const ListSVG = <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-list mr-2"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>;
   const CloudDownloadSVG = <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-cloud-download mr-2"><path d="M4 14.5V14a4 4 0 0 1 7.24-2.83"/><path d="M16.5 19.5A5.5 5.5 0 0 0 18 10h-1.26a8 8 0 1 0-16.3 0"/><path d="m12 16 2-2 2 2"/><line x1="12" x2="12" y1="14" y2="22"/></svg>;
   const RotateCcwSVG = <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rotate-ccw mr-2"><path d="M3 12a9 9 0 1 0 9-9.5V3"/><path d="M3 12a9 9 0 1 0 9 9.5V21"/><path d="M3 12h-.5"/><path d="M12 21v-.5"/><path d="M12 3v-.5"/><path d="M21 12h.5"/></svg>;
 
@@ -264,7 +262,7 @@ function App() {
       <div className="bg-white shadow-md border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-4 text-center">
           <h1 className="text-2xl font-bold text-gray-800">
-            Ford Ürün Takip Sistemi
+            Ürün Takip Sistemi
           </h1>
         </div>
       </div>
@@ -390,18 +388,6 @@ function App() {
             Sistem İşlemleri
           </h3>
           <div className="flex flex-wrap justify-center space-x-2 md:space-x-4">
-            <button
-              onClick={() => fetchTotalCount()}
-              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md transition-colors duration-200 flex items-center mb-2 md:mb-0"
-            >
-              {SignalSVG} Güncelle
-            </button>
-            <button
-              onClick={() => fetchDailyStats()}
-              className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-md transition-colors duration-200 flex items-center mb-2 md:mb-0"
-            >
-              {ListSVG} İstatistik
-            </button>
             <button
               onClick={downloadCsv}
               className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white text-sm font-medium rounded-md transition-colors duration-200 flex items-center mb-2 md:mb-0"
